@@ -50,6 +50,8 @@ jobs:
     - uses: actions/checkout@master
     - name: Commit files
       run: |
+        git config --local user.email "win32prog@gmail.com"
+        git config --local user.name "Saggins-Action"
         git add main
         git commit -m "Add bin"
     - name: Push changes
