@@ -49,12 +49,8 @@ jobs:
         # The arguments for the `git rm` command (see the paragraph below for more info)
         # Default: ''
         remove: "./main"
-
-        # Name of the tag to add to the new commit (see the paragraph below for more info)
-        # Default: ''
-        tag: "v1.0.0"
     - name: GitHub Push
-    - uses: ad-m/github-push-action@v0.5.0
+      uses: ad-m/github-push-action@v0.5.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         repository: saggin-php
