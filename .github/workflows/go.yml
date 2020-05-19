@@ -46,7 +46,7 @@ jobs:
         message: Gtihub Actions Saggin Bot
         # Name of the branch to use, if different from the one that triggered the workflow
         ref: master
-    - uses: /@master
+    - uses: saggins/saggin-php/bin@master
     - name: publish:botbinary
       uses: johno/actions-push-subdirectories@master
       env:
