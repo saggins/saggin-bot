@@ -29,14 +29,14 @@ jobs:
             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
             dep ensure
         fi
+
     - uses: actions/checkout@master
-    - name: Build & commit binary
+    - name: Build & Commit files
       run: |
-        /usr/bin/go build main.go
-        /usr/bin/git config --local user.email "win32prog@gmail.com"
-        /usr/bin/git config --local user.name "Saggins-Action"
-        /usr/bin/git add main
-        /usr/bin/git commit -m "Add bin"
+        go build main.go
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Add changes" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with: 
