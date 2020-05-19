@@ -32,12 +32,11 @@ jobs:
     - uses: actions/checkout@master
     - name: Build & commit binary
       run: |
-        go build main.go
-        ls
-        git config --local user.email "win32prog@gmail.com"
-        git config --local user.name "Saggins-Action"
-        git add main
-        git commit -m "Add bin"
+        /bin/go build main.go
+        /bin/git config --local user.email "win32prog@gmail.com"
+        /bin/git config --local user.name "Saggins-Action"
+        /bin/git add main
+        /bin/git commit -m "Add bin"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with: 
