@@ -5,17 +5,17 @@ import (
 	"time"
 	"fmt"
 	"os"
-	"log"
+//	"log"
 	"os/signal"
 	"syscall"
 	"encoding/json"
 	"strconv"
-	"io/ioutil"
+//	"io/ioutil"
 
 
 
 	"github.com/bwmarrin/discordgo"
-	"gopkg.in/yaml.v2"
+//	"gopkg.in/yaml.v2"
 	
 	"github.com/Tnze/go-mc/bot"
 	"github.com/Tnze/go-mc/chat"
