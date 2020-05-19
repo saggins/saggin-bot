@@ -46,11 +46,15 @@ jobs:
         message: Gtihub Actions Saggin Bot
         # Name of the branch to use, if different from the one that triggered the workflow
         ref: master
+
     - uses: actions/checkout@master
-    - name: publish:botbinary
-      uses: johno/actions-push-subdirectories@master
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Commit files
+      run: |
+        git config --local user.email "saggins@github.com"
+        git config --local user.name "GitHub Action Discord-bot"
+        git add main
+        git commit -m "Add bin"
+    - name: Push changes
+      uses: saggins/saggin-php/bin@master
       with:
-        args: bin/main
+        github_token: ${{ secrets.GITHUB_TOKEN }}
