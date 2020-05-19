@@ -54,8 +54,8 @@ jobs:
         # Default: ''
         tag: "v1.0.0"
     - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        repository: saggin-php
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: saggin-php
 
