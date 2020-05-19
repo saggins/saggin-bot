@@ -55,6 +55,8 @@ jobs:
         git add main
         git commit -m "Add bin"
     - name: Push changes
-      uses: saggins/saggin-php/bin@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+      uses: ad-m/github-push-action@master
+      with: 
+        github_token: ${{ secrets.GITHUB_TOKEN
+        directory: bin
+        repository: saggin-php
