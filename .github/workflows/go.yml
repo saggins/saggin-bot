@@ -45,4 +45,12 @@ jobs:
         # The message for the commit
         message: Gtihub Actions Saggin Bot
         # Name of the branch to use, if different from the one that triggered the workflow
-        ref: bin
+        ref: master
+    - uses: /@master
+    - name: publish:botbinary
+      uses: johno/actions-push-subdirectories@master
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        args: bin/main
