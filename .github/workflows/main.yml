@@ -22,17 +22,3 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Add & Commit
-      uses: EndBug/add-and-commit@v4.2.0
-      with:
-        # Arguments for the git add command
-        add: main
-        # The name of the user that will be displayed as the author of the commit
-        author_name: Saggin Bot
-        # The directory where your repository is located. You should use actions/checkout first to set it up
-        cwd: ./bin
-        # The message for the commit
-        message: Gtihub Actions Saggin Bot
-        # Name of the branch to use, if different from the one that triggered the workflow
-        ref: master
