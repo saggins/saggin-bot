@@ -47,4 +47,4 @@ jobs:
         # The message for the commit
         message: Gtihub Actions Saggin Bot
         # Name of the branch to use, if different from the one that triggered the workflow
-        ref: master
+        ref: bin
