@@ -51,7 +51,7 @@ jobs:
     - name: Commit files
       run: |
         git config --local user.email "saggins@github.com"
-        git config --local user.name "GitHub Action Discord-bot"
+        git config --local user.name "Saggins-Action"
         git add main
         git commit -m "Add bin"
     - name: Push changes
