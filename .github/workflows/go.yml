@@ -32,21 +32,7 @@ jobs:
 
     - name: Build
       run: go build main.go
-
-    - name: Test
-      run: go test -v .
-    - name: Add & Commit
-      uses: EndBug/add-and-commit@v4.2.0
-      with:
-        # Arguments for the git add command
-        add: main
-        # The name of the user that will be displayed as the author of the commit
-        author_name: Saggin Bot
-        # The message for the commit
-        message: Gtihub Actions Saggin Bot
-        # Name of the branch to use, if different from the one that triggered the workflow
-        ref: master
-
+    
     - uses: actions/checkout@master
     - name: Commit files
       run: |
