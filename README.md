@@ -3,10 +3,10 @@ Discord Bot for the Discord Server. Fun
 
 ### System Variables
 
-ip: Minecraft Ip
-port: Minecraft ip port
-token: Discord Api token
-channel id: the specfic text channel you want it to output to
+- ip: Minecraft Ip
+- port: Minecraft ip port
+- token: Discord Api token
+- channel id: the specfic text channel you want it to output to
 
 ### To use: 
 1. Set System variables for every thing you need
