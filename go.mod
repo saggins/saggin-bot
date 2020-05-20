@@ -1,6 +1,6 @@
 module github.com/saggin-bot
 
-go 1.14
+go 1.13
 
 require (
 	github.com/Tnze/go-mc v1.15.1

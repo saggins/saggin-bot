@@ -1,44 +1,43 @@
 package main
 
 import (
-	"strings"
-	"time"
 	"fmt"
 	"os"
-//	"log"
-	"os/signal"
-	"syscall"
+	"strings"
+	"time"
+
+	//	"log"
 	"encoding/json"
+	"os/signal"
 	"strconv"
-//	"io/ioutil"
+	"syscall"
 
-
+	//	"io/ioutil"
 
 	"github.com/bwmarrin/discordgo"
-//	"gopkg.in/yaml.v2"
-	
+	//	"gopkg.in/yaml.v2"
+
 	"github.com/Tnze/go-mc/bot"
 	"github.com/Tnze/go-mc/chat"
 	"github.com/google/uuid"
 )
 
 type T struct {
-	Ip 	string `yaml:"ip"`
-	Token string `yaml:"token"`
+	Ip        string `yaml:"ip"`
+	Token     string `yaml:"token"`
 	Channelid string `yaml:"channelid"`
-	Port string `yaml:"port"`
+	Port      string `yaml:"port"`
 }
 
-var token string 
+var token string
 var ip string
 var channelid string
 var port string
 
-
-func init(){
+func init() {
 
 	token = os.Getenv("token")
-	ip =os.Getenv("ip")
+	ip = os.Getenv("ip")
 	channelid = os.Getenv("channelid")
 	port = os.Getenv("port")
 
@@ -68,7 +67,7 @@ func main() {
 		return
 	}
 	dg.AddHandler(ready)
-	dg.AddHandler(guildCreate)
+	//dg.AddHandler(guildCreate)
 	err = dg.Open()
 	if err != nil {
 		fmt.Println("Error opening Discord session: ", err)
@@ -76,20 +75,20 @@ func main() {
 	//the channel
 
 	// nukes the channel
-	
+
 	//creates inital message
-	msg, _, _:=  statusmsg() 
-	chanMessages, _ :=  dg.ChannelMessages(channelid, int(30) ,"", "","" )
-	for _, message  := range chanMessages {
+	msg, _, _ := statusmsg()
+	chanMessages, _ := dg.ChannelMessages(channelid, int(30), "", "", "")
+	for _, message := range chanMessages {
 		dg.ChannelMessageDelete(channelid, message.ID)
 	}
-	m, err := dg.ChannelMessageSend( channelid, msg)
-	if (err!=nil ){
-		fmt.Printf("channel msg send failure: %v", err)	
+	m, err := dg.ChannelMessageSend(channelid, msg)
+	if err != nil {
+		fmt.Printf("channel msg send failure: %v", err)
 	}
 
 	// Ticker to edit the message periodically
-	go backgroundStatus(dg ,m.ID, m.ChannelID )
+	go backgroundStatus(dg, m.ID, m.ChannelID)
 
 	// Wait here until CTRL-C or other term signal is received.
 	fmt.Println("Saggbot is ready .  Press CTRL-C to exit.")
@@ -101,31 +100,30 @@ func main() {
 	dg.Close()
 }
 
-func backgroundStatus(s *discordgo.Session, messageid string, channelid string ) {
+func backgroundStatus(s *discordgo.Session, messageid string, channelid string) {
 
 	ticker := time.NewTicker(1 * time.Second)
 	for _ = range ticker.C {
-		msg, up, player :=  statusmsg() 
-		if (!player) {
+		msg, up, player := statusmsg()
+		if !player {
 			//pause := time.NewTicker(60 * time.Second)
 		}
-		if ( !up ) {
+		if !up {
 			//pause := time.NewTicker(60 * time.Second)
 
 		}
-		_, err:= s.ChannelMessageEdit( channelid  ,messageid, msg)
-		if (err!= nil){
+		_, err := s.ChannelMessageEdit(channelid, messageid, msg)
+		if err != nil {
 			fmt.Printf("Message edit error: %v", err)
 		}
 	}
 }
 
-
 func statusmsg() (string, bool, bool) {
 	ports, _ := strconv.Atoi(port)
 	resp, _, err := bot.PingAndList(ip, ports)
 	if err != nil {
-		msg  := "@Saggins#0250 :x: Sagg.in is Currently Down :(" 
+		msg := "@Saggins#0250 :x: Sagg.in is Currently Down :("
 		fmt.Printf("ping and list server fail: %v", err)
 		return msg, false, false
 	}
@@ -135,22 +133,22 @@ func statusmsg() (string, bool, bool) {
 
 	msg := make([]string, len(s.Players.Sample))
 	msg = append(msg, ":white_check_mark: : Sagg.in is up")
-	for _, player  := range s.Players.Sample {
+	for _, player := range s.Players.Sample {
 		playermsg := "-> " + player.Name
 		msg = append(msg, playermsg)
 	}
-	leftover  := len(s.Players.Sample) - s.Players.Online
-	msg =append(msg, "and "+ strconv.Itoa(leftover) +" more people")
+	leftover := len(s.Players.Sample) - s.Players.Online
+	msg = append(msg, "and "+strconv.Itoa(leftover)+" more people")
 
 	newmsg := strings.Join(msg, "\n")
-	if (len(s.Players.Sample) == 0 ){
+	if len(s.Players.Sample) == 0 {
 		return newmsg, true, false
 	}
 	return newmsg, true, true
 
 }
 
-func ready(s *discordgo.Session, event *discordgo.Ready){
+func ready(s *discordgo.Session, event *discordgo.Ready) {
 	s.UpdateStatus(0, ip)
 }
 func guildCreate(s *discordgo.Session, event *discordgo.GuildCreate) {
