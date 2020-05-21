@@ -77,7 +77,7 @@ func main() {
 	// nukes the channel
 
 	//creates inital message
-	msg, _, _ := statusmsg()
+	msg, _, _, _ := statusmsg()
 	chanMessages, _ := dg.ChannelMessages(channelid, int(30), "", "", "")
 	for _, message := range chanMessages {
 		dg.ChannelMessageDelete(channelid, message.ID)
@@ -104,28 +104,23 @@ func backgroundStatus(s *discordgo.Session, messageid string, channelid string) 
 
 	ticker := time.NewTicker(1 * time.Second)
 	for _ = range ticker.C {
-		msg, up, player := statusmsg()
-		if !player {
-			//pause := time.NewTicker(60 * time.Second)
-		}
-		if !up {
-			//pause := time.NewTicker(60 * time.Second)
-
-		}
+		msg, _, _, numplayer := statusmsg()
 		_, err := s.ChannelMessageEdit(channelid, messageid, msg)
+		backmsg := strconv.Itoa(numplayer) + " people are on mc.sagg.in"
+		err = s.UpdateStatus(0, backmsg)
 		if err != nil {
 			fmt.Printf("Message edit error: %v", err)
 		}
 	}
 }
 
-func statusmsg() (string, bool, bool) {
+func statusmsg() (string, bool, bool, int) {
 	ports, _ := strconv.Atoi(port)
 	resp, _, err := bot.PingAndList(ip, ports)
 	if err != nil {
 		msg := "@Saggins#0250 :x: Sagg.in is Currently Down :("
 		fmt.Printf("ping and list server fail: %v", err)
-		return msg, false, false
+		return msg, false, false, 0
 	}
 
 	var s status
@@ -141,10 +136,7 @@ func statusmsg() (string, bool, bool) {
 	msg = append(msg, "and "+strconv.Itoa(leftover)+" more people")
 
 	newmsg := strings.Join(msg, "\n")
-	if len(s.Players.Sample) == 0 {
-		return newmsg, true, false
-	}
-	return newmsg, true, true
+	return newmsg, true, true, s.Players.Online
 
 }
 
